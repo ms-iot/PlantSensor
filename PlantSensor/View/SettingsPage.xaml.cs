@@ -92,6 +92,10 @@ namespace PlantSensor
         public int IdealTemp= 0;
         public int IdealBright=0;
         public int IdealSoilMoist=0;
+        public string ConsumerKeySetting = "";
+        public string ConsumerSecretSetting = "";
+        public string AccessKeySetting = "";
+        public string AccessTokenSetting = "";
 
         public async void Save()
         {

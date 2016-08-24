@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.2*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid x:Name="TwitterAppBar" Grid.Row="0" Grid.Column="3">
@@ -40,7 +40,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="0.1*"/>
             </Grid.RowDefinitions>
-            <TextBlock FontSize="30" Text="Tweets History:" Grid.Row="0" Grid.Column="0" Foreground="#A70267"/>
+            <TextBlock FontSize="30" Text="  Tweets:" Grid.Row="0" Grid.Column="0" Foreground="White"/>
             <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
                 <Grid x:Name="HistoryTweeterGrid" BorderBrush="#A70267">
                     <ListView x:Name= "HistoryTweetList" Foreground="#A70267">
@@ -52,11 +52,11 @@
                            FontSize="24" 
                            FontStyle="Italic" 
                            FontWeight="SemiBold"
-                           Foreground="DarkBlue" />
+                           Foreground="White" />
                                 <TextBlock Text="{Binding TweetDate}" 
                            Margin="20,0,20,8"
                            FontSize="16"
-                           Foreground="DarkGray" 
+                           Foreground="White" 
                            Opacity="0.8" />
                             </StackPanel>
                         </DataTemplate>
@@ -65,40 +65,58 @@
                 </Grid>
             </ScrollViewer>
         </Grid>
-        <Grid x:Name="HowTo" Grid.Row="2" Grid.Column="2">
+        <Grid x:Name="HowToAndSettings" Grid.Row="2" Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="EnableTweetsGrid" Grid.Row="0">
+            <Grid x:Name="HowTo" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid x:Name="EnableTweetsGrid" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text=" Enable Tweets " Grid.Column="0" FontSize="30" Foreground="White" VerticalAlignment="Center" Margin="0,0,20,20"/>
+                    <ToggleSwitch x:Name="toggleSwitchTwitter" Grid.Column="1" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" BorderBrush="#F6D86B" Toggled="toggleSwitchTwitter_Toggled" RequestedTheme="Dark" Margin="0,0,0,20"/>
+                </Grid>
+                <TextBlock x:Name="HowToText" Text=" How to Tweet:" Foreground="White" FontSize="30" Grid.Row="1"/>
+                <StackPanel  Grid.Row="2">
+                    <TextBlock x:Name="Step1Text" Text="Go to apps.twitter.com" Foreground="White" FontSize="30" Grid.Row="2" Margin="10"/>
+                    <TextBlock x:Name="Step2Text" Text="Set up account" Foreground="White" FontSize="30" Grid.Row="3" Margin="10"/>
+                    <TextBlock x:Name="Step3Text" Text="Receive consumer key, consumer secret, access token, and access token secret" Foreground="White" FontSize="30" Grid.Row="4" TextWrapping="WrapWholeWords"  Margin="10"/>                
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="SettingsTwitterPage" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.4*"/>
+                    <RowDefinition Height="1.7*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.4*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Enable Tweets " Grid.Column="0" FontSize="30" Foreground="#F6D86B" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                <ToggleSwitch x:Name="toggleSwitchTwitter" Grid.Column="1" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#F6D86B" BorderBrush="#F6D86B" Toggled="toggleSwitchTwitter_Toggled" RequestedTheme="Dark"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="  Consumer Key" Foreground="White" VerticalAlignment="Center" Margin="0,0,15,0" FontSize="20"/>
+                <TextBox x:Name="ConsumerKeyTextBlock" Grid.Row="0" Grid.Column="1" Foreground="#323232" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Consumer Key"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="  Consumer Secret" Foreground="White" VerticalAlignment="Center" Margin="0,0,15,0" FontSize="20"/>
+                <TextBox x:Name="ConsumerSecretTextBlock" Grid.Row="1" Grid.Column="1" Foreground="#323232" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Consumer Secret"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="  Access Key" Foreground="White" VerticalAlignment="Center" Margin="0,0,15,0" FontSize="20"/>
+                <TextBox x:Name="AccessTokenTextBlock" Grid.Row="2" Grid.Column="1" Foreground="#323232" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Access Key"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="  Access Token" Foreground="White" VerticalAlignment="Center" Margin="0,0,15,0" FontSize="20"/>
+                <TextBox x:Name="AccessSecretTextBlock" Grid.Row="3" Grid.Column="1" Foreground="#323232" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Consumer Secret"/>
+                <TextBlock x:Name="TwitterStatusText" Text="If you have made changes: unsaved" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White"/>
+                <Button x:Name="TwitterSaveButton" Content="Save" Grid.Row="5" Grid.Column="0" Background="White" Foreground="#323232" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Grid>
-            <TextBlock x:Name="HowToText" Text="How to Tweet:" Foreground="#F6D86B" FontSize="30" Grid.Row="1"/>
-            <TextBlock x:Name="Step1Text" Text="-go to apps.twitter.com" Foreground="#F6D86B" FontSize="30" Grid.Row="2"/>
-            <TextBlock x:Name="Step2Text" Text="-set up account" Foreground="#F6D86B" FontSize="30" Grid.Row="3"/>
-            <TextBlock x:Name="Step3Text" Text="-receive consumer key, " Foreground="#F6D86B" FontSize="30" Grid.Row="4"/>
-            <TextBlock x:Name="Step31Text" Text="consumer secret, access " Foreground="#F6D86B" FontSize="30" Grid.Row="5"/>
-            <TextBlock x:Name="Step32Text" Text="token, and access token " Foreground="#F6D86B" FontSize="30" Grid.Row="6"/>
-            <TextBlock x:Name="Step33Text" Text="secret" Foreground="#F6D86B" FontSize="30" Grid.Row="7"/>
-            <TextBlock x:Name="Step4Text" Text="-set these in Settings" Foreground="#F6D86B" FontSize="30" Grid.Row="8"/>
         </Grid>
     </Grid>
 </Page>

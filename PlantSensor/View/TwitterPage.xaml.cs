@@ -81,7 +81,9 @@ namespace PlantSensor
 
         private string determineTweet()
         {
-            return "HelloWorld";
+            return "Your Plant may be suffering! These our suggestions." +Environment.NewLine+"For Brightness adjust it by: "+ MainPage.suggestionBrightness + Environment.NewLine + "For Temperature adjust it by: " + MainPage.suggestionTemperature + Environment.NewLine + "For Soil Moisture adjust it by: " + MainPage.suggestionSoilMoisture;
+            
+            //return "HelloWorld";
         }
 
         private void TwitterCalendarAppBar_Click(object sender, RoutedEventArgs e)

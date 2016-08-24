@@ -5,6 +5,5 @@
   </PropertyGroup>
   <ImportGroup>
     <Import Project="$(NuGetPackageRoot)\Microsoft.Bcl.Build\1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('$(NuGetPackageRoot)\Microsoft.Bcl.Build\1.0.21\build\Microsoft.Bcl.Build.targets')" />
-    <Import Project="$(NuGetPackageRoot)\Microsoft.IoT.DeviceCore\1.0.3\build\Microsoft.IoT.DeviceCore.targets" Condition="Exists('$(NuGetPackageRoot)\Microsoft.IoT.DeviceCore\1.0.3\build\Microsoft.IoT.DeviceCore.targets')" />
   </ImportGroup>
 </Project>

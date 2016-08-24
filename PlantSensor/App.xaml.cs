@@ -52,6 +52,7 @@ namespace PlantSensor
 
         //this variable holds the settings for the plant
         public static Settings PlantSettings;
+        public static Settings TwitterSettings;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -60,6 +61,7 @@ namespace PlantSensor
         public App()
         {
             PlantSettings = new Settings();
+            TwitterSettings = new Settings();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             SensorProvider = new SensorDataProvider();
@@ -131,6 +133,14 @@ namespace PlantSensor
             try
             {
                 PlantSettings = await Settings.Load("settings.txt");
+            }
+            catch
+            {
+
+            }
+            try
+            {
+                TwitterSettings = await Settings.Load("settings.txt");
             }
             catch
             {
