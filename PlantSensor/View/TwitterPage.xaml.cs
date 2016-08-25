@@ -21,7 +21,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace PlantSensor
 {
-    //twitterList class here
+    //Class that stores with instance variables of the tweets and when they were tweeted
     public class twitterListClass
     {
         public string Tweet { get; set;}
@@ -32,24 +32,54 @@ namespace PlantSensor
     /// </summary>
     public sealed partial class TwitterPage : Page
     {
-        Timer twitterTimerHistory;
+        Boolean hasAccount;
         Timer twitterTimerLive;
         ObservableCollection<twitterListClass> listOfTweets;
+
+        //Inside the constructor, the settings are set. Based off of these settings,
+        //the code attempts to login the user. If the settings credentials does not correlate to
+        //a real twitter account, then it tells the user accordingly. 
         public TwitterPage()
         {
             this.InitializeComponent();
-            twitterTimerHistory = new Timer(timerTwitterHistory, this, 0, 1000);
-            Auth.SetUserCredentials("5no3TPnFYR9oArbzprNa8QpbY", "9kPVZaI2aLOxDD5S1m6EuDsRnDyeovqxuZA7oe43LlmidVin6U", "764234424552558592-zqHPE9eIW5PIOw36J5FELnMGgSA9mKp", "0f9gFGGQ5ahP0AuR8gT1ARtcRjVzyGmYcICXErWTUIila");
+            ConsumerKeyTextBlock.Text = App.TwitterSettings.ConsumerKeySetting;
+            ConsumerSecretTextBlock.Text = App.TwitterSettings.ConsumerSecretSetting;
+            AccessSecretTextBlock.Text = App.TwitterSettings.AccessKeySetting;
+            AccessTokenTextBlock.Text = App.TwitterSettings.AccessTokenSetting;
+            TwitterStatusText.Text = "If you have made changes: unsaved";
+
+            try
+            {
+                setUpUser();
+            }
+
+            catch
+            {
+                TwitterStatusText.Text = "These credentials do not match any twitter account";
+                hasAccount = false;
+            }
+        }
+
+        /*
+         * Authenticates the users
+         * gets the users tweets
+         * add them to the obersvable collection linked to the UI
+         * */
+        private void setUpUser()
+        {
+            Auth.SetUserCredentials(App.TwitterSettings.ConsumerKeySetting, App.TwitterSettings.ConsumerSecretSetting, App.TwitterSettings.AccessTokenSetting, App.TwitterSettings.AccessKeySetting);
+            //Auth.SetUserCredentials("5no3TPnFYR9oArbzprNa8QpbY", "9kPVZaI2aLOxDD5S1m6EuDsRnDyeovqxuZA7oe43LlmidVin6U", "764234424552558592-zqHPE9eIW5PIOw36J5FELnMGgSA9mKp", "0f9gFGGQ5ahP0AuR8gT1ARtcRjVzyGmYcICXErWTUIila");
             var user = User.GetAuthenticatedUser();
             var tweets = Timeline.GetUserTimeline(user);
             listOfTweets = new ObservableCollection<twitterListClass>();
-            foreach(Tweetinvi.Models.ITweet twitterInUI in tweets)
+            foreach (Tweetinvi.Models.ITweet twitterInUI in tweets)
             {
                 String twitterDateStringInUI = twitterInUI.CreatedAt.ToString();
                 String twitterStringInUI = twitterInUI.FullText.ToString();
-                listOfTweets.Add(new twitterListClass { Tweet = twitterStringInUI, TweetDate = twitterDateStringInUI});
+                listOfTweets.Add(new twitterListClass { Tweet = twitterStringInUI, TweetDate = twitterDateStringInUI });
             }
             HistoryTweetList.ItemsSource = listOfTweets;
+            hasAccount = true;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs navArgs)
@@ -57,33 +87,24 @@ namespace PlantSensor
             Debug.WriteLine("Twitter Page reached");
         }
 
-        private async void timerTwitterHistory(object state)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                //goes in constructor HistoryTweetList.ItemsSource = App.Twitterresult;
-            });
-        }
-
+        /*
+         * Tweets these on a timer
+         * */
         private async void twitterTimerLiveMethod(object state)
         {
             String TweetInTimer = determineTweet();
-            //var firstTweet = Tweet.PublishTweet(Tweet);
-            //String stringIntoFile = Tweet + "," + DateTime.Now + Environment.NewLine;
+            //tweets the determined tweet
+            var firstTweet = Tweet.PublishTweet(TweetInTimer);
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 //instead of adding string to list, add object from class
                 listOfTweets.Add(new twitterListClass { Tweet = TweetInTimer, TweetDate = DateTime.Now.ToString() });
             });
-            //HistoryTweetList.ItemsSource = listOfTweets;
-            //Windows.Storage.FileIO.AppendTextAsync(App.TwitterFile, stringIntoFile);
         }
 
         private string determineTweet()
         {
-            return "Your Plant may be suffering! These our suggestions." +Environment.NewLine+"For Brightness adjust it by: "+ MainPage.suggestionBrightness + Environment.NewLine + "For Temperature adjust it by: " + MainPage.suggestionTemperature + Environment.NewLine + "For Soil Moisture adjust it by: " + MainPage.suggestionSoilMoisture;
-            
-            //return "HelloWorld";
+            return "Brightness: "+ MainPage.currentBrightness + Environment.NewLine + "Temperature: " + MainPage.currentTemperature + Environment.NewLine + "Soil Moisture: " + MainPage.currentSoilMoisture;
         }
 
         private void TwitterCalendarAppBar_Click(object sender, RoutedEventArgs e)
@@ -106,6 +127,9 @@ namespace PlantSensor
 
         }
 
+        /**
+         * Checks if the enable tweets is toggled
+         * */
         private void toggleSwitchTwitter_Toggled(object sender, RoutedEventArgs e)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
@@ -113,12 +137,37 @@ namespace PlantSensor
             {
                 if(toggleSwitch.IsOn == true)
                 {
-                    twitterTimerLive = new Timer(twitterTimerLiveMethod, this, 0, 3000);
+                    if (hasAccount)
+                    {
+                        twitterTimerLive = new Timer(twitterTimerLiveMethod, this, 0, 3000);
+                    }
                 }
                 else
                 {
                     twitterTimerLive.Change(Timeout.Infinite, Timeout.Infinite);
                 }
+            }
+        }
+
+        /**
+         * Saves all of the settings and checks to see if the new settings
+         * correlate to a real account
+         * */
+        private void TwitterSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            App.TwitterSettings.ConsumerKeySetting = ConsumerKeyTextBlock.Text;
+            App.TwitterSettings.ConsumerSecretSetting = ConsumerSecretTextBlock.Text;
+            App.TwitterSettings.AccessKeySetting = AccessSecretTextBlock.Text;
+            App.TwitterSettings.AccessTokenSetting = AccessTokenTextBlock.Text;
+            App.TwitterSettings.Save();
+            try
+            {
+                setUpUser();
+                TwitterStatusText.Text = "Account Successfully made";
+            }
+            catch
+            {
+                TwitterStatusText.Text = "These credentials do not match any twitter account";
             }
         }
     }

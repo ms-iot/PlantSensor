@@ -34,9 +34,9 @@ namespace PlantSensor
         SolidColorBrush SolidColorBrushLightRed; 
         SolidColorBrush SolidColorBrushRed;
 
-        public static float suggestionBrightness;
-        public static float suggestionTemperature;
-        public static float suggestionSoilMoisture;
+        public static float currentBrightness;
+        public static float currentTemperature;
+        public static float currentSoilMoisture;
 
         /**
          * sets all of the variables that were described above
@@ -88,7 +88,8 @@ namespace PlantSensor
                 case "Brightness":
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        suggestionBrightness = idealBrightness - e.SensorValue;
+                        currentBrightness = e.SensorValue;
+                        float suggestionBrightness = idealBrightness - e.SensorValue;
                         CurrentBrightnessNumber.Text = e.SensorValue.ToString(format);
                         OurSuggestionNumberBrightness.Text = suggestionBrightness.ToString(format);
                         ellipseFill = FigureOutFill(suggestionBrightness);
@@ -108,7 +109,8 @@ namespace PlantSensor
                 case "Temperature":
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        suggestionTemperature = idealTemperature - e.SensorValue;
+                        currentTemperature = e.SensorValue;
+                        float suggestionTemperature = idealTemperature - e.SensorValue;
                         CurrentTemperatureNumber.Text = e.SensorValue.ToString(format);
                         OurSuggestionNumberTemperature.Text = suggestionTemperature.ToString(format);
                         ellipseFill = FigureOutFill(suggestionTemperature);
@@ -128,7 +130,8 @@ namespace PlantSensor
                 case "SoilMoisture":
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        suggestionSoilMoisture = idealSoilMoisture - e.SensorValue;
+                        currentSoilMoisture = e.SensorValue;
+                        float suggestionSoilMoisture = idealSoilMoisture - e.SensorValue;
                         CurrentSoilMoistureNumber.Text = e.SensorValue.ToString(format);
                         OurSuggestionNumberSoilMoisture.Text = suggestionSoilMoisture.ToString(format);
                         ellipseFill = FigureOutFill(suggestionSoilMoisture);

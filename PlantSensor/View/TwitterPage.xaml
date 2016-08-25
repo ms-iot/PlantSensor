@@ -107,15 +107,15 @@
                     <ColumnDefinition Width="0.4*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="  Consumer Key" Foreground="White" VerticalAlignment="Center" Margin="0,0,15,0" FontSize="20"/>
-                <TextBox x:Name="ConsumerKeyTextBlock" Grid.Row="0" Grid.Column="1" Foreground="#323232" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Consumer Key"/>
+                <TextBox x:Name="ConsumerKeyTextBlock" Grid.Row="0" Grid.Column="1" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Consumer Key"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="  Consumer Secret" Foreground="White" VerticalAlignment="Center" Margin="0,0,15,0" FontSize="20"/>
-                <TextBox x:Name="ConsumerSecretTextBlock" Grid.Row="1" Grid.Column="1" Foreground="#323232" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Consumer Secret"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="  Access Key" Foreground="White" VerticalAlignment="Center" Margin="0,0,15,0" FontSize="20"/>
-                <TextBox x:Name="AccessTokenTextBlock" Grid.Row="2" Grid.Column="1" Foreground="#323232" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Access Key"/>
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="  Access Token" Foreground="White" VerticalAlignment="Center" Margin="0,0,15,0" FontSize="20"/>
-                <TextBox x:Name="AccessSecretTextBlock" Grid.Row="3" Grid.Column="1" Foreground="#323232" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Consumer Secret"/>
+                <TextBox x:Name="ConsumerSecretTextBlock" Grid.Row="1" Grid.Column="1" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Consumer Secret"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="  Access Token" Foreground="White" VerticalAlignment="Center" Margin="0,0,15,0" FontSize="20"/>
+                <TextBox x:Name="AccessTokenTextBlock" Grid.Row="2" Grid.Column="1" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Access Token"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="  Access Secret" Foreground="White" VerticalAlignment="Center" Margin="0,0,15,0" FontSize="20"/>
+                <TextBox x:Name="AccessSecretTextBlock" Grid.Row="3" Grid.Column="1" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderBrush="White" Background="#323232" Text="Access Secret"/>
                 <TextBlock x:Name="TwitterStatusText" Text="If you have made changes: unsaved" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White"/>
-                <Button x:Name="TwitterSaveButton" Content="Save" Grid.Row="5" Grid.Column="0" Background="White" Foreground="#323232" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button x:Name="TwitterSaveButton" Content="Save" Grid.Row="5" Grid.Column="0" Background="White" Foreground="#323232" HorizontalAlignment="Left" VerticalAlignment="Center" Click="TwitterSaveButton_Click"/>
             </Grid>
         </Grid>
     </Grid>

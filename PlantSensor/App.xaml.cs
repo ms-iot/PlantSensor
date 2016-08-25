@@ -101,13 +101,13 @@ namespace PlantSensor
 
             try
             {
-                TwitterFile = await storageFolder.GetFileAsync(FileNames.TwitterfileName);
-                Debug.WriteLine("Old twitter Files are used");
+                TwitterFile = await storageFolder.GetFileAsync(FileNames.SettingsfileName);
+                Debug.WriteLine("Old settings Files are used");
             }
             catch (FileNotFoundException e)
             {
-                TwitterFile = await storageFolder.CreateFileAsync(FileNames.TwitterfileName);
-                Debug.WriteLine("new twitter Files are used");
+                TwitterFile = await storageFolder.CreateFileAsync(FileNames.SettingsfileName);
+                Debug.WriteLine("new settingsFiles are used");
             }
 
             Brightnessresult = await Windows.Storage.FileIO.ReadLinesAsync(BrightnessFile);
@@ -132,7 +132,7 @@ namespace PlantSensor
             await App.SensorProvider.BMP280.Initialize();
             try
             {
-                PlantSettings = await Settings.Load("settings.txt");
+                PlantSettings = await Settings.Load(FileNames.SettingsfileName);
             }
             catch
             {
@@ -140,7 +140,7 @@ namespace PlantSensor
             }
             try
             {
-                TwitterSettings = await Settings.Load("settings.txt");
+                TwitterSettings = await Settings.Load(FileNames.SettingsfileName);
             }
             catch
             {

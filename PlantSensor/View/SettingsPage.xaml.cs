@@ -101,7 +101,7 @@ namespace PlantSensor
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Settings));
             StorageFolder folder = ApplicationData.Current.LocalFolder;
-            StorageFile file = await folder.CreateFileAsync("settings.txt", CreationCollisionOption.ReplaceExisting);
+            StorageFile file = await folder.CreateFileAsync(FileNames.SettingsfileName, CreationCollisionOption.ReplaceExisting);
             Stream stream = await file.OpenStreamForWriteAsync();
 
             using (stream)
