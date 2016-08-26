@@ -68,7 +68,6 @@ namespace PlantSensor
         private void setUpUser()
         {
             Auth.SetUserCredentials(App.TwitterSettings.ConsumerKeySetting, App.TwitterSettings.ConsumerSecretSetting, App.TwitterSettings.AccessTokenSetting, App.TwitterSettings.AccessKeySetting);
-            //Auth.SetUserCredentials("5no3TPnFYR9oArbzprNa8QpbY", "9kPVZaI2aLOxDD5S1m6EuDsRnDyeovqxuZA7oe43LlmidVin6U", "764234424552558592-zqHPE9eIW5PIOw36J5FELnMGgSA9mKp", "0f9gFGGQ5ahP0AuR8gT1ARtcRjVzyGmYcICXErWTUIila");
             var user = User.GetAuthenticatedUser();
             var tweets = Timeline.GetUserTimeline(user);
             listOfTweets = new ObservableCollection<twitterListClass>();

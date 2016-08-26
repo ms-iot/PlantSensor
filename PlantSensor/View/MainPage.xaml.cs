@@ -61,19 +61,28 @@ namespace PlantSensor
             SolidColorBrushLightRed = new SolidColorBrush(colorlightRed);
             SolidColorBrushRed = new SolidColorBrush(colorRed);
 
-        //DateTime Now = DateTime.Now;
-        //Random rand = new Random();
-        //TimeSpan oneDay = new TimeSpan(1, 0, 0, 0);
-        //TimeSpan oneHour = new TimeSpan(1, 0, 0);
-        //DateTime LowerBound = Now - oneDay;
-        //while(LowerBound<Now)
-        //{
-        //    float randomValue = (float)rand.NextDouble() * 10;
-        //    String nextValue = randomValue + "," + LowerBound + Environment.NewLine;
-        //    App.BrightnessList.Add(nextValue);
-        //    LowerBound += oneHour;
-        //}
-    }
+            DateTime Now = DateTime.Now;
+            Random rand = new Random();
+            TimeSpan oneDay = new TimeSpan(1, 0, 0, 0);
+            TimeSpan oneHour = new TimeSpan(1, 0, 0);
+            DateTime LowerBound = Now - oneDay;
+            while (LowerBound < Now)
+            {
+                float randomValue = (float)rand.NextDouble() * 10;
+                String nextValue = randomValue + "," + LowerBound + Environment.NewLine;
+                App.TemperatureList.Add(nextValue);
+
+                randomValue = (float)rand.NextDouble() * 10;
+                nextValue = randomValue + "," + LowerBound + Environment.NewLine;
+                App.BrightnessList.Add(nextValue);
+
+                randomValue = (float)rand.NextDouble() * 10;
+                nextValue = randomValue + "," + LowerBound + Environment.NewLine;
+                App.SoilMoistureList.Add(nextValue);
+
+                LowerBound += oneHour;
+            }
+        }
 
         /**
          * updates the UI when the sensors make a new reading
