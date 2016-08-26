@@ -321,51 +321,54 @@ public Dictionary<DateTime, List<float>> setUpGeneralMasterListPerHour(IList<str
          * */
         public void setUpGeneralMasterListPerWeek(List<ChartDataPoint> masterDayList, List<ChartDataPoint> masterWeekList)
         {
-            int daysInWeek = 7;
-            int numberOfWeeks = dataPointsForEightWeeks / daysInWeek;
-            //the number of weeks is set, but the number of data points per week
-            //is not, so an array of lists is used. 
-            List<float>[] weekList = new List<float>[numberOfWeeks];
+            if (masterDayList.Count != 0)
+            {
+                int daysInWeek = 7;
+                int numberOfWeeks = dataPointsForEightWeeks / daysInWeek;
+                //the number of weeks is set, but the number of data points per week
+                //is not, so an array of lists is used. 
+                List<float>[] weekList = new List<float>[numberOfWeeks];
 
-            TimeSpan oneWeek = new TimeSpan(7, 0, 0, 0);
-            DateTime firstDate = DateTime.Parse(masterDayList[0].Name);
-            DateTime[] weekDates = new DateTime[numberOfWeeks];
-            //loops through the number of weeks and assign lists and floats
-            for (int ii=0; ii< numberOfWeeks; ii++)
-            {
-                weekList[ii] = new List<float>();
-                weekDates[ii] = firstDate + TimeSpan.FromTicks(oneWeek.Ticks * (ii+1)); 
-            }
-            int weekCounter = 0;
-            //loops through the masterDayList(the average value of the sensors per day)
-            //and identifies the date into the week
-            for(int ii=0; ii<masterDayList.Count(); ii++)
-            {
-                DateTime comparedDate = DateTime.Parse(masterDayList[ii].Name);
-                if(comparedDate>weekDates[weekCounter])
+                TimeSpan oneWeek = new TimeSpan(7, 0, 0, 0);
+                DateTime firstDate = DateTime.Parse(masterDayList[0].Name);
+                DateTime[] weekDates = new DateTime[numberOfWeeks];
+                //loops through the number of weeks and assign lists and floats
+                for (int ii = 0; ii < numberOfWeeks; ii++)
                 {
-                    for (int jj = weekCounter; jj < weekDates.Count(); jj++)
+                    weekList[ii] = new List<float>();
+                    weekDates[ii] = firstDate + TimeSpan.FromTicks(oneWeek.Ticks * (ii + 1));
+                }
+                int weekCounter = 0;
+                //loops through the masterDayList(the average value of the sensors per day)
+                //and identifies the date into the week
+                for (int ii = 0; ii < masterDayList.Count(); ii++)
+                {
+                    DateTime comparedDate = DateTime.Parse(masterDayList[ii].Name);
+                    if (comparedDate > weekDates[weekCounter])
                     {
-                        if (comparedDate < weekDates[jj])
+                        for (int jj = weekCounter; jj < weekDates.Count(); jj++)
                         {
-                            weekCounter = jj;
-                            break;
+                            if (comparedDate < weekDates[jj])
+                            {
+                                weekCounter = jj;
+                                break;
+                            }
                         }
                     }
+                    //adds the value to that week
+                    float nextFloat = masterDayList[ii].Amount;
+                    weekList[weekCounter].Add(nextFloat);
                 }
-                //adds the value to that week
-                float nextFloat = masterDayList[ii].Amount;
-                weekList[weekCounter].Add(nextFloat);
-            }
 
-            for(int ii=0; ii<weekList.Count();ii++)
-            {
-                //if size of list is zero, then it shouldnt be on the list
-                if (weekList[ii].Count()!=0)
+                for (int ii = 0; ii < weekList.Count(); ii++)
                 {
-                    DateTime beginningOfWeek = weekDates[ii] - oneWeek;
-                    String weekName = beginningOfWeek.ToString("MM/dd") + "-" + weekDates[ii].ToString("MM/dd");
-                    masterWeekList.Add(new ChartDataPoint() { Name = weekName, Amount = weekList[ii].Average() });
+                    //if size of list is zero, then it shouldnt be on the list
+                    if (weekList[ii].Count() != 0)
+                    {
+                        DateTime beginningOfWeek = weekDates[ii] - oneWeek;
+                        String weekName = beginningOfWeek.ToString("MM/dd") + "-" + weekDates[ii].ToString("MM/dd");
+                        masterWeekList.Add(new ChartDataPoint() { Name = weekName, Amount = weekList[ii].Average() });
+                    }
                 }
             }
         }

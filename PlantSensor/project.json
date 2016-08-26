@@ -1,6 +1,5 @@
 ﻿{
   "dependencies": {
-    "Microsoft.IoT.Devices": "1.0.6",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "TweetinviAPI": "1.0.0",
     "WinRTXamlToolkit.Controls.DataVisualization": "2.0.0"

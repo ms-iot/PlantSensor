@@ -92,12 +92,16 @@ namespace PlantSensor
         public int IdealTemp= 0;
         public int IdealBright=0;
         public int IdealSoilMoist=0;
+        public string ConsumerKeySetting = "";
+        public string ConsumerSecretSetting = "";
+        public string AccessKeySetting = "";
+        public string AccessTokenSetting = "";
 
         public async void Save()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Settings));
             StorageFolder folder = ApplicationData.Current.LocalFolder;
-            StorageFile file = await folder.CreateFileAsync("settings.txt", CreationCollisionOption.ReplaceExisting);
+            StorageFile file = await folder.CreateFileAsync(FileNames.SettingsfileName, CreationCollisionOption.ReplaceExisting);
             Stream stream = await file.OpenStreamForWriteAsync();
 
             using (stream)

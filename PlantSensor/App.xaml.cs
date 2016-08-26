@@ -52,6 +52,7 @@ namespace PlantSensor
 
         //this variable holds the settings for the plant
         public static Settings PlantSettings;
+        public static Settings TwitterSettings;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -60,6 +61,7 @@ namespace PlantSensor
         public App()
         {
             PlantSettings = new Settings();
+            TwitterSettings = new Settings();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             SensorProvider = new SensorDataProvider();
@@ -99,13 +101,13 @@ namespace PlantSensor
 
             try
             {
-                TwitterFile = await storageFolder.GetFileAsync(FileNames.TwitterfileName);
-                Debug.WriteLine("Old twitter Files are used");
+                TwitterFile = await storageFolder.GetFileAsync(FileNames.SettingsfileName);
+                Debug.WriteLine("Old settings Files are used");
             }
             catch (FileNotFoundException e)
             {
-                TwitterFile = await storageFolder.CreateFileAsync(FileNames.TwitterfileName);
-                Debug.WriteLine("new twitter Files are used");
+                TwitterFile = await storageFolder.CreateFileAsync(FileNames.SettingsfileName);
+                Debug.WriteLine("new settingsFiles are used");
             }
 
             Brightnessresult = await Windows.Storage.FileIO.ReadLinesAsync(BrightnessFile);
@@ -130,7 +132,15 @@ namespace PlantSensor
             await App.SensorProvider.BMP280.Initialize();
             try
             {
-                PlantSettings = await Settings.Load("settings.txt");
+                PlantSettings = await Settings.Load(FileNames.SettingsfileName);
+            }
+            catch
+            {
+
+            }
+            try
+            {
+                TwitterSettings = await Settings.Load(FileNames.SettingsfileName);
             }
             catch
             {
